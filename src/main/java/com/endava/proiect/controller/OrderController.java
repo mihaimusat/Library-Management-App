@@ -25,38 +25,38 @@ public class OrderController {
     @GetMapping(value = "")
     public List<OrderDto> getOrders() {
         List<Order> orderList = orderService.getAllOrders();
-        return orderConverter.fromOrderListToOrderDtoList(orderList);
+        return orderConverter.fromEntitiesToDtos(orderList);
     }
 
     @GetMapping(value = "{orderId}")
     public OrderDto getOrderById(@PathVariable Long orderId) {
         Order order = orderService.getOrderById(orderId);
-        return orderConverter.fromOrderToDto(order);
+        return orderConverter.fromEntityToDto(order);
     }
 
     @GetMapping(value = "readerOrders")
     public List<OrderDto> getOrdersOfReader(@RequestParam Long readerId) {
         List<Order> orderList = orderService.findOrdersOfReader(readerId);
-        return orderConverter.fromOrderListToOrderDtoList(orderList);
+        return orderConverter.fromEntitiesToDtos(orderList);
     }
 
     @PostMapping(value = "")
     public OrderDto saveOrder(@RequestBody OrderDto orderDto) {
-        Order order = orderConverter.fromDtoToOrder(orderDto);
+        Order order = orderConverter.fromDtoToEntity(orderDto);
         Order savedOrder = orderService.saveOrder(order);
-        return orderConverter.fromOrderToDto(savedOrder);
+        return orderConverter.fromEntityToDto(savedOrder);
     }
 
     @PostMapping(value = "/rental")
     public OrderDto rentBook(@RequestParam Long bookId, @RequestParam Long readerId, @RequestBody OrderDto orderDto) {
-        Order order = orderConverter.fromDtoToOrder(orderDto);
+        Order order = orderConverter.fromDtoToEntity(orderDto);
         Order savedOrder = orderService.rentBook(bookId, readerId, order);
-        return orderConverter.fromOrderToDto(savedOrder);
+        return orderConverter.fromEntityToDto(savedOrder);
     }
 
     @PutMapping(value = "/return")
     public OrderDto returnBook(@RequestParam Long orderId) {
         Order order = orderService.returnBook(orderId);
-        return orderConverter.fromOrderToDto(order);
+        return orderConverter.fromEntityToDto(order);
     }
 }

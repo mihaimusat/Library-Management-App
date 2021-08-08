@@ -8,11 +8,8 @@ import com.endava.proiect.repository.ReaderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
-public class OrderConverter {
+public class OrderConverter extends BaseConverter<OrderDto, Order> {
 
     private final BookRepository bookRepository;
     private final ReaderRepository readerRepository;
@@ -23,36 +20,28 @@ public class OrderConverter {
         this.readerRepository = readerRepository;
     }
 
-    public Order fromDtoToOrder(OrderDto orderDto) {
-        return new Order(
-                bookRepository.findById(orderDto.getBookId())
-                        .orElseThrow(() -> new NotFoundException("Book not found", "book.not.found")),
-                readerRepository.findById(orderDto.getReaderId())
-                        .orElseThrow(() -> new NotFoundException("Reader not found", "reader.not.found")),
-                orderDto.getRentalDate(),
-                orderDto.getReturnDate()
-        );
+    @Override
+    public Order fromDtoToEntity(OrderDto dto) {
+        Order order = new Order();
+        order.setBook(bookRepository.findById(dto.getBookId())
+                .orElseThrow(() -> new NotFoundException("Book not found", "book.not.found")));
+        order.setReader(readerRepository.findById(dto.getReaderId())
+                .orElseThrow(() -> new NotFoundException("Reader not found", "reader.not.found")));
+        order.setRentalDate(dto.getRentalDate());
+        order.setReturnDate(dto.getReturnDate());
+
+        return order;
     }
 
-    public OrderDto fromOrderToDto(Order order) {
-        return new OrderDto(
-                order.getId(),
-                order.getBook().getId(),
-                order.getReader().getId(),
-                order.getRentalDate(),
-                order.getReturnDate()
-        );
-    }
+    @Override
+    public OrderDto fromEntityToDto(Order entity) {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setId(entity.getId());
+        orderDto.setBookId(entity.getBook().getId());
+        orderDto.setReaderId(entity.getReader().getId());
+        orderDto.setRentalDate(entity.getRentalDate());
+        orderDto.setReturnDate(entity.getReturnDate());
 
-    public List<OrderDto> fromOrderListToOrderDtoList(List<Order> orderList) {
-        return orderList.stream()
-                .map(order -> new OrderDto(
-                        order.getId(),
-                        order.getBook().getId(),
-                        order.getReader().getId(),
-                        order.getRentalDate(),
-                        order.getReturnDate()
-                ))
-                .collect(Collectors.toList());
+        return orderDto;
     }
 }

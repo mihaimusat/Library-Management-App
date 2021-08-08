@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReaderDto {
+public class ReaderDto extends BaseDto {
 
     private Long id;
     private String name;

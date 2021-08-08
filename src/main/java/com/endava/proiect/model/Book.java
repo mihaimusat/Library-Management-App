@@ -12,12 +12,7 @@ import java.util.List;
 @Table(name = "book")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Book {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Book extends BaseEntity {
 
     @NotNull
     @Column(name = "author")
@@ -39,30 +34,6 @@ public class Book {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<Order> ordersList = new ArrayList<>();
-
-    public Book(@NotNull Long id, @NotNull String author, @NotNull String title, @NotNull String status) {
-        this.id = id;
-        this.author = author;
-        this.title = title;
-        this.status = status;
-    }
-
-    public Book(@NotNull Long id, @NotNull String author, @NotNull String title,
-                int publicationYear, @NotNull String status) {
-        this.id = id;
-        this.author = author;
-        this.title = title;
-        this.publicationYear = publicationYear;
-        this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getAuthor() {
         return author;
@@ -96,10 +67,18 @@ public class Book {
         this.status = status;
     }
 
+    public List<Order> getOrdersList() {
+        return ordersList;
+    }
+
+    public void setOrdersList(List<Order> ordersList) {
+        this.ordersList = ordersList;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", author='" + author + '\'' +
                 ", title='" + title + '\'' +
                 ", publicationYear=" + publicationYear +

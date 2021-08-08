@@ -25,19 +25,19 @@ public class ReaderController {
     @GetMapping(value = "")
     public List<ReaderDto> getReaders() {
         List<Reader> readerList = readerService.getAllReaders();
-        return readerConverter.fromReaderListToReaderDtoList(readerList);
+        return readerConverter.fromEntitiesToDtos(readerList);
     }
 
     @GetMapping(value = "/{id}")
     public ReaderDto getReader(@PathVariable Long id) {
         Reader reader = readerService.getReader(id);
-        return readerConverter.fromReaderToDto(reader);
+        return readerConverter.fromEntityToDto(reader);
     }
 
     @PostMapping(value = "")
     public ReaderDto saveReader(@RequestBody ReaderDto readerDto) {
-        Reader reader = readerConverter.fromDtoToReader(readerDto);
+        Reader reader = readerConverter.fromDtoToEntity(readerDto);
         Reader savedReader = readerService.saveReader(reader);
-        return readerConverter.fromReaderToDto(savedReader);
+        return readerConverter.fromEntityToDto(savedReader);
     }
 }

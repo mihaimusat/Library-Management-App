@@ -4,36 +4,26 @@ import com.endava.proiect.dto.ReaderDto;
 import com.endava.proiect.model.Reader;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
-public class ReaderConverter {
+public class ReaderConverter extends BaseConverter<ReaderDto, Reader> {
 
-    public Reader fromDtoToReader(ReaderDto readerDto) {
-        return new Reader(
-                readerDto.getId(),
-                readerDto.getName(),
-                LocalDate.now()
-        );
+    @Override
+    public Reader fromDtoToEntity(ReaderDto dto) {
+        Reader reader = new Reader();
+        reader.setId(dto.getId());
+        reader.setName(dto.getName());
+        reader.setRegistrationDate(dto.getRegistrationDate());
+
+        return reader;
     }
 
-    public ReaderDto fromReaderToDto(Reader reader) {
-        return new ReaderDto(
-                reader.getId(),
-                reader.getName(),
-                reader.getRegistrationDate()
-        );
-    }
+    @Override
+    public ReaderDto fromEntityToDto(Reader entity) {
+        ReaderDto readerDto = new ReaderDto();
+        readerDto.setId(entity.getId());
+        readerDto.setName(entity.getName());
+        readerDto.setRegistrationDate(entity.getRegistrationDate());
 
-    public List<ReaderDto> fromReaderListToReaderDtoList(List<Reader> readerList) {
-        return readerList.stream()
-                .map(reader -> new ReaderDto(
-                        reader.getId(),
-                        reader.getName(),
-                        reader.getRegistrationDate()
-                ))
-                .collect(Collectors.toList());
+        return readerDto;
     }
 }

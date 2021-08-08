@@ -4,38 +4,28 @@ import com.endava.proiect.dto.BookDto;
 import com.endava.proiect.model.Book;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
-public class BookConverter {
+public class BookConverter extends BaseConverter<BookDto, Book> {
 
-    public Book fromDtoToBook(BookDto bookDto) {
-        return new Book(
-                bookDto.getId(),
-                bookDto.getAuthor(),
-                bookDto.getTitle(),
-                bookDto.getStatus()
-        );
+    @Override
+    public Book fromDtoToEntity(BookDto dto) {
+        Book book = new Book();
+        book.setId(dto.getId());
+        book.setAuthor(dto.getAuthor());
+        book.setTitle(dto.getTitle());
+        book.setStatus(dto.getStatus());
+
+        return book;
     }
 
-    public BookDto fromBookToDto(Book book) {
-        return new BookDto(
-                book.getId(),
-                book.getAuthor(),
-                book.getTitle(),
-                book.getStatus()
-        );
-    }
+    @Override
+    public BookDto fromEntityToDto(Book entity) {
+        BookDto bookDto = new BookDto();
+        bookDto.setId(entity.getId());
+        bookDto.setAuthor(entity.getAuthor());
+        bookDto.setTitle(entity.getTitle());
+        bookDto.setStatus(entity.getStatus());
 
-    public List<BookDto> fromBookListToBookDtoList(List<Book> bookList) {
-        return bookList.stream()
-                .map(book -> new BookDto(
-                        book.getId(),
-                        book.getAuthor(),
-                        book.getTitle(),
-                        book.getStatus()
-                ))
-                .collect(Collectors.toList());
+        return bookDto;
     }
 }

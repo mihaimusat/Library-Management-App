@@ -13,12 +13,7 @@ import java.util.List;
 @Table(name = "reader")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Reader {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Reader extends BaseEntity {
 
     @NotNull
     @Column(name = "name")
@@ -33,25 +28,6 @@ public class Reader {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<Order> ordersList = new ArrayList<>();
-
-    public Reader(@NotNull Long id, @NotNull String name, @NotNull LocalDate registrationDate) {
-        this.id = id;
-        this.name = name;
-        this.registrationDate = registrationDate;
-    }
-
-    public Reader(@NotNull String name, @NotNull LocalDate registrationDate) {
-        this.name = name;
-        this.registrationDate = registrationDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -80,7 +56,7 @@ public class Reader {
     @Override
     public String toString() {
         return "Reader{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", name='" + name + '\'' +
                 ", registrationDate=" + registrationDate +
                 ", ordersList=" + ordersList +

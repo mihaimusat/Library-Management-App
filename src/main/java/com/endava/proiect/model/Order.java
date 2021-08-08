@@ -11,12 +11,7 @@ import java.time.LocalDate;
 @Table(name = "reader_order")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Order extends BaseEntity {
 
     @NotNull
     @ManyToOne
@@ -35,27 +30,6 @@ public class Order {
     @NotNull
     @Column(name = "return_date")
     private LocalDate returnDate;
-
-    public Order(@NotNull Book book, @NotNull Reader reader, @NotNull LocalDate rentalDate, @NotNull LocalDate returnDate) {
-        this.book = book;
-        this.reader = reader;
-        this.rentalDate = rentalDate;
-        this.returnDate = returnDate;
-    }
-
-    public Order(@NotNull Book book, @NotNull Reader reader, @NotNull LocalDate rentalDate) {
-        this.book = book;
-        this.reader = reader;
-        this.rentalDate = rentalDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Book getBook() {
         return book;
@@ -92,7 +66,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", book=" + book +
                 ", reader=" + reader +
                 ", rentalDate=" + rentalDate +

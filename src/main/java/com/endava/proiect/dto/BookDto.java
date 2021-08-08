@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookDto {
+public class BookDto extends BaseDto {
 
     private Long id;
     private String title;

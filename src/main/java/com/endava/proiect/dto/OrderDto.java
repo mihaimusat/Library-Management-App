@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDto {
+public class OrderDto extends BaseDto {
 
     private Long id;
     private Long bookId;

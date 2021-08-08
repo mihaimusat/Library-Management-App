@@ -25,26 +25,26 @@ public class BookController {
     @GetMapping("")
     public List<BookDto> getAllBooks() {
         List<Book> bookList = bookService.getAllBooks();
-        return bookConverter.fromBookListToBookDtoList(bookList);
+        return bookConverter.fromEntitiesToDtos(bookList);
     }
 
     @GetMapping(value = "/{id}")
     public BookDto getBook(@PathVariable Long id) {
         Book book = bookService.getBook(id);
-        return bookConverter.fromBookToDto(book);
+        return bookConverter.fromEntityToDto(book);
     }
 
     @PostMapping(value = "")
     public BookDto saveBook(@RequestBody BookDto bookDto) {
-        Book book = bookConverter.fromDtoToBook(bookDto);
+        Book book = bookConverter.fromDtoToEntity(bookDto);
         Book savedBook = bookService.saveBook(book);
-        return bookConverter.fromBookToDto(savedBook);
+        return bookConverter.fromEntityToDto(savedBook);
     }
 
     @PutMapping(value = "/{id}")
     public BookDto updateBook(@PathVariable Long id, @RequestParam String status) {
         Book book = bookService.updateBook(id, status);
-        return bookConverter.fromBookToDto(book);
+        return bookConverter.fromEntityToDto(book);
     }
 
     @DeleteMapping(value = "/{id}")
