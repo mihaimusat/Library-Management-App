@@ -3,6 +3,7 @@ package com.endava.proiect.controller;
 import com.endava.proiect.converter.BookConverter;
 import com.endava.proiect.dto.BookDto;
 import com.endava.proiect.model.Book;
+import com.endava.proiect.model.Status;
 import com.endava.proiect.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class BookController {
     }
 
     @PutMapping(value = "/{id}")
-    public BookDto updateBook(@PathVariable Long id, @RequestParam String status) {
+    public BookDto updateBook(@PathVariable Long id, @RequestParam Status status) {
         Book book = bookService.updateBook(id, status);
         return bookConverter.fromEntityToDto(book);
     }

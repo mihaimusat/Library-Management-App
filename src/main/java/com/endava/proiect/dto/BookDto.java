@@ -1,5 +1,6 @@
 package com.endava.proiect.dto;
 
+import com.endava.proiect.model.Status;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,7 @@ public class BookDto extends BaseDto {
     private Long id;
     private String title;
     private String author;
-    private String status;
+    private Status status;
 
     public Long getId() {
         return id;
@@ -28,11 +29,11 @@ public class BookDto extends BaseDto {
         this.title = title;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

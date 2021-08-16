@@ -27,7 +27,7 @@ public class Book extends BaseEntity {
 
     @NotNull
     @Column(name = "status")
-    private String status;
+    private Status status;
 
     @OneToMany(targetEntity = Order.class,
             mappedBy = "book",
@@ -59,11 +59,11 @@ public class Book extends BaseEntity {
         this.publicationYear = publicationYear;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -78,11 +78,11 @@ public class Book extends BaseEntity {
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + getId() +
-                ", author='" + author + '\'' +
+                "author='" + author + '\'' +
                 ", title='" + title + '\'' +
                 ", publicationYear=" + publicationYear +
-                ", status='" + status + '\'' +
+                ", status=" + status +
+                ", ordersList=" + ordersList +
                 '}';
     }
 }

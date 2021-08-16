@@ -2,6 +2,7 @@ package com.endava.proiect.service;
 
 import com.endava.proiect.exception.NotFoundException;
 import com.endava.proiect.model.Book;
+import com.endava.proiect.model.Status;
 import com.endava.proiect.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class BookService {
        return bookRepository.save(book);
     }
 
-    public Book updateBook(Long id, String status) {
+    public Book updateBook(Long id, Status status) {
         Optional<Book> bookOptional = bookRepository.findById(id);
         if(bookOptional.isPresent()) {
             Book book = bookOptional.get();

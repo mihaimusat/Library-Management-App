@@ -5,6 +5,7 @@ import com.endava.proiect.exception.NotFoundException;
 import com.endava.proiect.model.Book;
 import com.endava.proiect.model.Order;
 import com.endava.proiect.model.Reader;
+import com.endava.proiect.model.Status;
 import com.endava.proiect.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,9 +50,9 @@ public class OrderService {
         Book book = bookService.getBook(bookId);
         Reader reader = readerService.getReader(readerId);
 
-        if (book.getStatus().equals("available")) {
+        if (book.getStatus().equals(Status.AVAILABLE)) {
             Order newOrder = new Order(book, reader, oldOrder.getRentalDate(), oldOrder.getReturnDate());
-            book.setStatus("ordered");
+            book.setStatus(Status.ORDERED);
             bookService.saveBook(book);
             return orderRepository.save(newOrder);
         }
@@ -65,7 +66,7 @@ public class OrderService {
         if(orderOptional.isPresent()) {
             Order order = orderOptional.get();
             Book book = order.getBook();
-            book.setStatus("available");
+            book.setStatus(Status.AVAILABLE);
             order.setReturnDate(LocalDate.now());
             bookService.saveBook(book);
             return orderRepository.save(order);
